@@ -1,0 +1,127 @@
+/* Blog Card Animations */
+.blog-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover Effects */
+.blog-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12) !important;
+}
+
+.blog-card:hover .blog-image {
+    transform: scale(1.05);
+}
+
+/* Category Badge */
+.category-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Blog Meta Top */
+.blog-meta-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.read-time {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Blog Tags */
+.blog-tags {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background-color: #f0f4ff;
+    color: var(--primary-color);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Like/Comment Buttons */
+.action-btn {
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.like-btn:hover, .like-btn.active {
+    color: #ff6b6b;
+}
+
+.comment-btn:hover {
+    color: #4cc9f0;
+}
+
+/* Pulse Animation for Featured Card */
+.blog-card.featured {
+    position: relative;
+}
+
+.blog-card.featured::after {
+    content: "Featured";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .blog-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .blog-image-container {
+        height: 180px;
+    }
+    
+    .blog-title {
+        font-size: 1.2rem;
+    }
+}
