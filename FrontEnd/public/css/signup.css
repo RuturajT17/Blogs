@@ -1,0 +1,74 @@
+/* Main Styles for Sign Up Page */
+body {
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+}
+
+.auth-illustration {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.illustration-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.auth-form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form Styles */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+    border-color: #667eea;
+}
+
+/* Button Styles */
+.auth-submit-btn {
+    background-color: #667eea;
+    border-color: #667eea;
+    transition: all 0.3s ease;
+}
+
+.auth-submit-btn:hover {
+    background-color: #5a6fd1;
+    border-color: #5a6fd1;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .auth-illustration {
+        min-height: 300px;
+    }
+    
+    .auth-form-container {
+        padding: 1.5rem !important;
+        box-shadow: none;
+    }
+}
+
+/* Password Strength Indicator */
+.password-weak {
+    color: #dc3545 !important;
+}
+
+.password-good {
+    color: #28a745 !important;
+}

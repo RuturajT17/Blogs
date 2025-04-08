@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blog API Tester</h1>
+    
+    <div>
+        <button onclick="getAllBlogs()">Get All Blogs</button>
+        <button onclick="getBlogById()">Get Blog by ID</button>
+        <input type="number" id="blogId" placeholder="Enter blog ID" value="1" min="1">
+    </div>
+    
+    <div>
+        <h3>Create New Blog</h3>
+        <form id="createBlogForm">
+            <div>
+                <label>Title:</label>
+                <input type="text" id="title" required style="width: 100%;">
+            </div>
+            <div>
+                <label>Content:</label>
+                <textarea id="content" required style="width: 100%; height: 100px;"></textarea>
+            </div>
+            <div>
+                <label>Category:</label>
+                <input type="text" id="category" required>
+            </div>
+            <div>
+                <label>Author ID:</label>
+                <input type="number" id="author_id" required value="1" min="1">
+            </div>
+            <div>
+                <label>Keywords (comma separated):</label>
+                <input type="text" id="keywords">
+            </div>
+            <button type="button" onclick="createBlog()">Create Blog</button>
+        </form>
+    </div>
+    
+    <div id="output">Console output will appear here...</div>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:3000/api/blogs';
+        const outputEl = document.getElementById('output');
+        
+        // Helper function to display output
+        function displayOutput(message) {
+            outputEl.textContent = typeof message === 'object' 
+                ? JSON.stringify(message, null, 2) 
+                : message;
+            console.log(message);
+        }
+        
+        // Get all blogs
+        async function getAllBlogs() {
+            try {
+                displayOutput("Fetching all blogs...");
+                const response = await fetch(API_BASE_URL);
+                const data = await response.json();
+                displayOutput(data);
+            } catch (error) {
+                displayOutput("Error: " + error.message);
+            }
+        }
+        
+        // Get blog by ID
+        async function getBlogById() {
+            const blogId = document.getElementById('blogId').value;
+            if (!blogId) {
+                displayOutput("Please enter a blog ID");
+                return;
+            }
+            
+            try {
+                displayOutput(`Fetching blog with ID ${blogId}...`);
+                const response = await fetch(`${API_BASE_URL}/${blogId}`);
+                const data = await response.json();
+                displayOutput(data);
+            } catch (error) {
+                displayOutput("Error: " + error.message);
+            }
+        }
+        
+        // Create new blog
+        async function createBlog() {
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const category = document.getElementById('category').value;
+            const author_id = document.getElementById('author_id').value;
+            const keywords = document.getElementById('keywords').value;
+            
+            if (!title || !content || !category || !author_id) {
+                displayOutput("Please fill all required fields");
+                return;
+            }
+            
+            const blogData = {
+                title,
+                content,
+                category,
+                author_id: parseInt(author_id),
+                keywords: keywords || undefined
+            };
+            
+            try {
+                displayOutput("Creating new blog...");
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(blogData)
+                });
+                const data = await response.json();
+                displayOutput(data);
+                
+                // Clear form
+                document.getElementById('createBlogForm').reset();
+            } catch (error) {
+                displayOutput("Error: " + error.message);
+            }
+        }
+        
+        // Initial test when page loads
+        window.onload = function() {
+            displayOutput("Page loaded. Click buttons to test API endpoints.");
+        };
+    </script>
+</body>
+</html>
